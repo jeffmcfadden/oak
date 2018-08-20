@@ -24,7 +24,7 @@
         .col-xs-2
           = f.label :live, class: "form-label"
         .col-xs-10
-          = f.select :live, [["Draft", 0], ["Live", 1]], {}, class: "form-control"
+          = f.select :live, options_for_select( [["Draft", 0], ["Live", 1]], (@post.live? ? 1 : 0) ), class: "form-control"
 
       .form-group
         .col-xs-2
