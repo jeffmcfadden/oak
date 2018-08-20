@@ -5,18 +5,19 @@ require "oak/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "oak"
+  s.name        = "oak-rails"
   s.version     = Oak::VERSION
   s.authors     = ["Jeff McFadden"]
   s.email       = ["jeff@mcfadden.io"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Oak."
-  s.description = "TODO: Description of Oak."
+  s.homepage    = "https://github.com/jeffmcfadden/oak-rails"
+  s.summary     = "Rails blogging engine."
+  s.description = "Rails blogging engine. Provides nice things."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
-
-  s.add_dependency "rails", "~> 5.2.1"
-
-  s.add_development_dependency "sqlite3"
+ 
+  s.add_dependency "rails",       "~> 5.2.1"
+  s.add_dependency "haml",        ">= 5.0.0"
+  s.add_dependency "friendly_id", ">= 5.2.0"
+  s.add_development_dependency 'sqlite3'
 end

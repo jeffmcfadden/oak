@@ -21,6 +21,18 @@ Or install it yourself as:
 $ gem install oak
 ```
 
+Mount the engine in `routes.rb`:
+
+    mount Oak::Engine, at: "/blog"
+
+
+Install Friendly ID if you didn't already have it in your app
+
+```bash
+$ rails generate friendly_id
+$ rails db:migrate
+```
+
 ## Contributing
 Contribution directions go here.
 
