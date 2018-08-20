@@ -1,0 +1,38 @@
+.row
+  .col-xs-12
+    = form_with model: [:admin, @post], class: "form form-horizontal" do |f|
+    
+      .form-group
+        .col-xs-2
+          = f.label :title, class: "form-label"
+        .col-xs-10
+          = f.text_field :title, class: "form-control"
+          
+      .form-group
+        .col-xs-2
+          = f.label :published_at, class: "form-label"
+        .col-xs-10
+          = f.datetime_select :published_at, {}, class: ""
+          
+      .form-group
+        .col-xs-2
+          = f.label :author_id, class: "form-label"
+        .col-xs-10
+          = f.collection_select :author_id, Oak.author_class.all, :id, :name, prompt: false, class: ""
+          
+      .form-group
+        .col-xs-2
+          = f.label :live, class: "form-label"
+        .col-xs-10
+          = f.select :live, [["Draft", 0], ["Live", 1]], {}, class: "form-control"
+
+      .form-group
+        .col-xs-2
+          = f.label :body, class: "form-label"
+        .col-xs-10
+          = f.text_area :body, class: "form-control", rows: 24
+      
+      .form-group
+        .col-xs-2
+        .col-xs-10.text-right
+          = f.submit "Save", class: "btn btn-primary btn-success"

@@ -1,0 +1,10 @@
+.row
+  .col-xs-12
+    = link_to "New Post", [:new, :admin, :post]
+
+.row
+  .col-xs-12
+    
+    - @posts.each do |post|
+      %section
+        = link_to post.title, [:edit, :admin, post]

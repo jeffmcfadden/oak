@@ -1,0 +1,12 @@
+.row
+  .col-xs-12
+    %h1
+      Edit Post
+  
+.row
+  .col-xs-12
+    = render partial: "form"
+    
+.row
+  .col-xs-12.text-right
+    = link_to "Destroy", [:admin, @post], method: :delete, data: { confirm: "Are you sure?" }, class: ""

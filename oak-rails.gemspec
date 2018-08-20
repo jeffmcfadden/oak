@@ -19,5 +19,9 @@ Gem::Specification.new do |s|
   s.add_dependency "rails",       "~> 5.2.1"
   s.add_dependency "haml",        ">= 5.0.0"
   s.add_dependency "friendly_id", ">= 5.2.0"
+  s.add_dependency "kaminari",    ">= 1.1.1"
+  s.add_dependency 'devise',      ">= 4.5.0"
+
+  
   s.add_development_dependency 'sqlite3'
 end
