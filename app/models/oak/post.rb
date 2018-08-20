@@ -1,6 +1,6 @@
 module Oak
   class Post < ApplicationRecord
-    belongs_to :author, class_name: Oak.author_class.to_s
+    belongs_to :author, class_name: Oak.author_class.to_s, optional: true
     before_validation :set_author
 
     extend FriendlyId
