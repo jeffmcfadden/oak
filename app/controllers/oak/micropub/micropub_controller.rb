@@ -42,7 +42,8 @@ module Oak
         
         @authenticated_user = nil
         if token.present?
-          @authenticated_user = User.find_by( access_token: token )
+          @authorization_request = IndieauthAuthorizationRequest.find_by access_token: token, approved: true
+          @authenticated_user    = User.find_by( id: @authorization_request.user_id )
         end
         
         if @authenticated_user.nil?
