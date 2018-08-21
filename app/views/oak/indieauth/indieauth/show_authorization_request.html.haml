@@ -1,23 +1,23 @@
 %h1 Authorization Request
 
 %p
-  session[:authorization_request_state]
-  = session[:authorization_request_state]       
+  state:
+  #{@authorization_request.state}
 %p
-  session[:authorization_request_state_set_at]
-  = session[:authorization_request_state_set_at]
+  redirect_uri:
+  #{@authorization_request.redirect_uri}
 %p
-  session[:authorization_request_redirect_uri]
-  = session[:authorization_request_redirect_uri]
+  client_id:
+  #{@authorization_request.client_id}
 %p
-  session[:authorization_request_client_id]   
-  = session[:authorization_request_client_id]   
+  me:
+  #{@authorization_request.me}
 %p
-  session[:authorization_request_me]          
-  = session[:authorization_request_me]          
+  scope:
+  #{@authorization_request.scope}
   
 %p
-  = link_to "Authorize Request", indieauth_authorize_authorization_request_path, method: :post
+  = link_to "Authorize Request", indieauth_authorize_authorization_request_path( @authorization_request.id ), method: :post
   
 %p
   = link_to "Decline Request", root_path

@@ -17,24 +17,28 @@ module Oak
       render json: { error: "invalid_request" }, status: 400
     end
     
-    def indiauth_get
+    def indieauth_get
       if params[:response_type].blank? || params[:response_type] == "id"
-        store_authentication_request_to_session
+        create_authentication_request
 
         if current_user.present?
-          redirect_to indieauth_show_authentication_request_path
+          redirect_to indieauth_show_authentication_request_path(@authentication_request)
+          return
         else
-          store_location_for(:user, indieauth_show_authentication_request)
-          redirect_to new_user_session_path
+          store_location_for(:user, indieauth_show_authentication_request_path(@authentication_request))
+          redirect_to indieauth_show_authentication_request_path(@authentication_request)
+          return
         end
       elsif params[:response_type] == "code"
-        store_authorization_request_to_session
+        create_authorization_request
         
         if current_user.present?
-          redirect_to indieauth_show_authorization_request_path
+          redirect_to indieauth_show_authorization_request_path(@authorization_request)
+          return
         else
-          store_location_for(:user, indieauth_show_authorization_request_path)
-          redirect_to new_user_session_path
+          store_location_for(:user, indieauth_show_authorization_request_path(@authorization_request))
+          redirect_to indieauth_show_authorization_request_path
+          return
         end
       end      
     end
@@ -66,62 +70,60 @@ module Oak
     
     def show_authentication_request
       authenticate_user!
+      
+      @authentication_request = IndieauthAuthenticationRequest.find_by id: params[:id], user_id: nil, approved: false
     end
     
     def show_authorization_request
       authenticate_user!
+      
+      @authorization_request = IndieauthAuthorizationRequest.find_by id: params[:id], user_id: nil, approved: false
     end
     
     def authorize_authentication_request
+      @authentication_request = IndieauthAuthenticationRequest.find_by id: params[:id], user_id: nil, approved: false
+      @authentication_request.update user_id: current_user.id, approved: true
       
-      authentication_request = IndieauthAuthenticationRequest.create state: session[:authentication_request_state],
-      redirect_uri: session[:authentication_request_redirect_uri],
-      client_id:    session[:authentication_request_client_id],
-      me:           session[:authentication_request_me],
-      code:         (0...8).map { (65 + rand(26)).chr }.join,
-      approved:     true
-      
-      uri = URI.parse(session[:authentication_request_redirect_uri])
-      new_query_ar = URI.decode_www_form(uri.query || '') << ["state", authentication_request.state, "code", authentication_request.code]
+      uri = URI.parse(@authentication_request.redirect_uri)
+      new_query_ar = URI.decode_www_form(uri.query || '') << ["state", @authentication_request.state]
+      new_query_ar = new_query_ar << ["code",  @authentication_request.code]
       uri.query = URI.encode_www_form(new_query_ar)
             
       redirect_to uri.to_s
     end
     
     def authorize_authorization_request
+      @authorization_request = IndieauthAuthorizationRequest.find_by id: params[:id], user_id: nil, approved: false
+      @authorization_request.update user_id: current_user.id, approved: true
       
-      authentication_request = IndieauthAuthorizationRequest.create state: session[:authentication_request_state],
-      redirect_uri: session[:authentication_request_redirect_uri],
-      client_id:    session[:authentication_request_client_id],
-      me:           session[:authentication_request_me],
-      scope:        session[:authorization_request_scope],
-      code:         (0...8).map { (65 + rand(26)).chr }.join,
-      access_token: (0...16).map { (65 + rand(26)).chr }.join,
-      approved:     true
+      uri = URI.parse(@authorization_request.redirect_uri)
+      new_query_ar = URI.decode_www_form(uri.query || '') << ["state", @authorization_request.state]
+      new_query_ar = new_query_ar << ["code",  @authorization_request.code]
       
-      uri = URI.parse(session[:authentication_request_redirect_uri])
-      new_query_ar = URI.decode_www_form(uri.query || '') << ["state", authentication_request.state, "code", authentication_request.code]
       uri.query = URI.encode_www_form(new_query_ar)
             
       redirect_to uri.to_s
     end
     
     
-    def store_authentication_request_to_session
-      session[:authentication_request_state]        = params[:state]
-      session[:authentication_request_state_set_at] = Time.now
-      session[:authentication_request_redirect_uri] = params[:redirect_uri]
-      session[:authentication_request_client_id]    = params[:client_id]
-      session[:authentication_request_me]           = params[:me]
+    def create_authentication_request
+      @authentication_request = IndieauthAuthenticationRequest.create state:        params[:state],
+        redirect_uri: params[:redirect_uri],
+        client_id:    params[:client_id],
+        me:           params[:me],
+        code:         (0...8).map { (65 + rand(26)).chr }.join,
+        approved:     false
     end  
     
-    def store_authorization_request_to_session
-      session[:authorization_request_state]        = params[:state]
-      session[:authorization_request_state_set_at] = Time.now
-      session[:authorization_request_redirect_uri] = params[:redirect_uri]
-      session[:authorization_request_client_id]    = params[:client_id]
-      session[:authorization_request_me]           = params[:me]
-      session[:authorization_request_scope]        = params[:scope]
+    def create_authorization_request
+      @authorization_request = IndieauthAuthorizationRequest.create state:        params[:state],
+        redirect_uri: params[:redirect_uri],
+        client_id:    params[:client_id],
+        me:           params[:me],
+        code:         (0...8).map { (65 + rand(26)).chr }.join,
+        access_token: (0...16).map { (65 + rand(26)).chr }.join,
+        approved:     false,
+        scope:        params[:scope]
     end  
     
     
