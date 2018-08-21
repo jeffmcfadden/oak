@@ -37,7 +37,7 @@ module Oak
           return
         else
           store_location_for(:user, indieauth_show_authorization_request_path(@authorization_request))
-          redirect_to indieauth_show_authorization_request_path
+          redirect_to indieauth_show_authorization_request_path(@authorization_request)
           return
         end
       end      
