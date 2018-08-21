@@ -1,0 +1,23 @@
+%h1 Authentication Request
+
+%p
+  session[:authentication_request_state]
+  = session[:authentication_request_state]       
+%p
+  session[:authentication_request_state_set_at]
+  = session[:authentication_request_state_set_at]
+%p
+  session[:authentication_request_redirect_uri]
+  = session[:authentication_request_redirect_uri]
+%p
+  session[:authentication_request_client_id]   
+  = session[:authentication_request_client_id]   
+%p
+  session[:authentication_request_me]          
+  = session[:authentication_request_me]          
+  
+%p
+  = link_to "Authorize Request", indieauth_authorize_authentication_request_path, method: :post
+  
+%p
+  = link_to "Decline Request", root_path
