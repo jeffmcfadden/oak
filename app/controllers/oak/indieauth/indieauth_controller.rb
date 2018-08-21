@@ -3,6 +3,7 @@ require_dependency "oak/application_controller"
 
 module Oak
   class Indieauth::IndieauthController < ApplicationController
+    protect_from_forgery with: :null_session
     
     def indiauth_post
       if params[:code].present? && params[:client_id].present? && params[:redirect_uri].present?
