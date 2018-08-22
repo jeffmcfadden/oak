@@ -6,6 +6,8 @@ module Oak
     extend FriendlyId
     friendly_id :title, use: :slugged
     
+    acts_as_taggable
+    
     scope :live, -> { where( live: true ) }
     
     def body_html

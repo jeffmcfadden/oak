@@ -1,6 +1,9 @@
 .row
-  .col-xs-12
-    = link_to "New Post", [:new, :admin, :post]
+  .col-xs-8
+    %h1{ style: "margin: 0;" } Posts
+
+  .col-xs-4.text-right
+    = link_to "New Post", [:new, :admin, :post], class: "btn btn-sm btn-success"
 
 .row
   .col-xs-12

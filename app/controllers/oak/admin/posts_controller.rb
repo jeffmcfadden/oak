@@ -1,9 +1,7 @@
 require_dependency "oak/application_controller"
 
 module Oak
-  class Admin::PostsController < ApplicationController
-    
-    before_action :authenticate_user!
+  class Admin::PostsController < Admin::ApplicationController
     
     def index
       @posts = Post.all.order( published_at: :desc, created_at: :desc )
@@ -49,7 +47,7 @@ module Oak
       end
     
       def post_params
-        params.require( :post ).permit( :title, :body, :published_at, :author_id, :live )
+        params.require( :post ).permit( :title, :body, :published_at, :author_id, :live, :tag_list )
       end
     
   end

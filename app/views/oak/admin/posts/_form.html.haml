@@ -1,4 +1,8 @@
 .row
+  .col-xs-12.text-right
+    = link_to "Cancel", [:admin, :posts], class: "btn btn-sm btn-info"
+    
+.row
   .col-xs-12
     = form_with model: [:admin, @post], class: "form form-horizontal" do |f|
     
@@ -31,8 +35,14 @@
           = f.label :body, class: "form-label"
         .col-xs-10
           = f.text_area :body, class: "form-control", rows: 24
+
+      .form-group
+        .col-xs-2
+          = f.label :tag_list, class: "form-label"
+        .col-xs-10
+          = f.text_field :tag_list, class: "form-control"
       
       .form-group
         .col-xs-2
-        .col-xs-10.text-right
-          = f.submit "Save", class: "btn btn-primary btn-success"
+        .col-xs-10.text-right          
+          = f.submit "Save", class: "btn btn-primary"
