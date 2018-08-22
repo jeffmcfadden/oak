@@ -10,6 +10,10 @@ module Oak
     
     scope :live, -> { where( live: true ) }
     
+    validates :published_at, presence: true
+    
+    before_validation :set_published_at_to_now_if_nil
+    
     def draft?
       !live
     end
@@ -33,6 +37,10 @@ module Oak
     private
       def set_author
         self.author = Oak.author_class.find_by(id: author_id.to_i)
+      end
+      
+      def set_published_at_to_now_if_nil
+        self.published_at = Time.now if self.published_at.nil?
       end
     
   end
