@@ -15,9 +15,13 @@ module Oak
     
     def body_with_asset_urls
       matches = body.scan( /\{\% asset_path "(.*?)" \%\}/ )
+      body_with_asset_urls = body
+      
       matches.each do |m|
-        body = (body.gsub( "{% asset_path \"#{m[0]}\" %}", ActionController::Base.helpers.asset_path(m[0]) ) rescue body)
+        body_with_asset_urls = body_with_asset_urls.gsub( "{% asset_path \"#{m[0]}\" %}", ActionController::Base.helpers.asset_path(m[0]) )
       end
+      
+      body_with_asset_urls
     end
     
     private
