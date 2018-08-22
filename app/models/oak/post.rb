@@ -10,7 +10,14 @@ module Oak
     
     def body_html
       markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-      markdown.render body
+      markdown.render body_with_asset_urls
+    end
+    
+    def body_with_asset_urls
+      matches = body.scan( /\{\% asset_path "(.*?)" \%\}/ )
+      matches.each do |m|
+        body = (body.gsub( "{% asset_path \"#{m[0]}\" %}", ActionController::Base.helpers.asset_path(m[0]) ) rescue body)
+      end
     end
     
     private
