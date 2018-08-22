@@ -10,6 +10,10 @@ module Oak
     
     scope :live, -> { where( live: true ) }
     
+    def draft?
+      !live
+    end
+    
     def body_html
       markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
       markdown.render body_with_asset_urls
