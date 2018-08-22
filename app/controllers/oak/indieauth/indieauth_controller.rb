@@ -88,6 +88,7 @@ module Oak
       uri = URI.parse(@authentication_request.redirect_uri)
       new_query_ar = URI.decode_www_form(uri.query || '') << ["state", @authentication_request.state]
       new_query_ar = new_query_ar << ["code",  @authentication_request.code]
+      new_query_ar = new_query_ar << ["me",  @authorization_request.me]
       uri.query = URI.encode_www_form(new_query_ar)
             
       redirect_to uri.to_s
@@ -100,6 +101,7 @@ module Oak
       uri = URI.parse(@authorization_request.redirect_uri)
       new_query_ar = URI.decode_www_form(uri.query || '') << ["state", @authorization_request.state]
       new_query_ar = new_query_ar << ["code",  @authorization_request.code]
+      new_query_ar = new_query_ar << ["me",  @authorization_request.me]
       
       uri.query = URI.encode_www_form(new_query_ar)
             
