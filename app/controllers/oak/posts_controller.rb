@@ -10,6 +10,7 @@ module Oak
     end
     
     def show
+      @post = Post.live.friendly.find( params[:id] )
     end
     
   end
