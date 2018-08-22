@@ -6,7 +6,7 @@ module Oak
     before_action :authenticate_user!
     
     def index
-      @posts = Post.all.order( published_at: :desc )
+      @posts = Post.all.order( published_at: :desc, created_at: :desc )
     end
     
     def show

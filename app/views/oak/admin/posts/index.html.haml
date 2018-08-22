@@ -7,4 +7,6 @@
     
     - @posts.each do |post|
       %section
+        = link_to post.id, [:edit, :admin, post]
+        — 
         = link_to post.title, [:edit, :admin, post]
