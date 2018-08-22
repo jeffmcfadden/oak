@@ -8,6 +8,11 @@ module Oak
     
     scope :live, -> { where( live: true ) }
     
+    def body_html
+      markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+      markdown.render body
+    end
+    
     private
       def set_author
         self.author = Oak.author_class.find_by(id: author_id.to_i)
