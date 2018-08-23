@@ -13,6 +13,7 @@ module Oak
     validates :published_at, presence: true
     
     before_validation :set_published_at_to_now_if_nil
+    before_validation :auto_set_micro_tag
     
     def draft?
       !live
@@ -41,6 +42,12 @@ module Oak
       
       def set_published_at_to_now_if_nil
         self.published_at = Time.now if self.published_at.nil?
+      end
+    
+      def auto_set_micro_tag
+        if title.blank? && body.length <= 280
+          self.tag_list += ", micro"
+        end
       end
     
   end

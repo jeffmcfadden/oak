@@ -6,7 +6,11 @@ module Oak
     layout '/application'
     
     def index
-      @posts = Post.live.order( published_at: :desc ).page(params[:page]).per(params[:per])
+      if Oak.tags_to_exclude_from_home_page.empty?
+        @posts = Post.live.order( published_at: :desc ).page(params[:page]).per(Oak.posts_per_page)
+      else
+        @posts = Post.tagged_with(Oak.tags_to_exclude_from_home_page, :exclude => true).live.order( published_at: :desc ).page(params[:page]).per(Oak.posts_per_page)
+      end
     end
     
     def show
