@@ -3,7 +3,6 @@ Oak::Engine.routes.draw do
 
   namespace :admin do
     resources :posts
-    resources :site_configs
   end
   
   namespace :micropub do

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Oak | <%= Oak::SiteConfig.find_by( key: "Site Name" )&.value %></title>
+  <title>Oak | <%= Oak.site_name %></title>
   
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
@@ -41,7 +41,6 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li><%= link_to "Posts", [:admin, :posts] %></li>
-          <li><%= link_to "Site Config", [:admin, :site_configs] %></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
