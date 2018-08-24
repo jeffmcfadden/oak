@@ -1,0 +1,7 @@
+- Oak::PostAsset.order( created_at: :desc ).limit(7).each do |post_asset|
+  %div
+    %img.img.img-responsive{ src: post_asset.public_url, style: "width: 170px;"  }
+    %code
+      #{post_asset.public_url}
+    
+    %hr

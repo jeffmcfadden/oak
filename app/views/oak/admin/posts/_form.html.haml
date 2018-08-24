@@ -3,7 +3,7 @@
     = link_to "Cancel", [:admin, :posts], class: "btn btn-sm btn-info"
     
 .row
-  .col-xs-12
+  .col-xs-8
     = form_with model: [:admin, @post], class: "form form-horizontal" do |f|
     
       .form-group
@@ -46,3 +46,17 @@
         .col-xs-2
         .col-xs-10.text-right          
           = f.submit "Save", class: "btn btn-primary"
+
+  .col-xs-4
+    %strong Add a Post Asset
+    
+    = form_with model: [:admin, @post_asset], class: "form form-horizontal", remote: true do |f|
+      .form-group
+        = f.file_field :file
+      
+      .form-group
+        = f.submit "Add", class: "btn btn-sm btn-success"
+      
+    .row#post-assets
+      = render partial: "post_assets"
+      

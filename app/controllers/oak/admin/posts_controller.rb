@@ -13,6 +13,8 @@ module Oak
     
     def new
       @post = Post.new
+      @post_asset = PostAsset.new
+      
     end
     
     def create
@@ -23,6 +25,7 @@ module Oak
     
     def edit
       set_post
+      @post_asset = PostAsset.new
     end
     
     def update

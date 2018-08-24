@@ -1,0 +1,7 @@
+console.log( "Post Asset Created!" );
+console.log( "<%= @post_asset.to_json %>" );
+console.log( "URL: " );
+console.log( "Key: <%= @post_asset.file.blob.key %>" );
+console.log( "Public URL: <%= @post_asset.public_url %>" );
+
+document.getElementById( 'post-assets' ).innerHTML = "<%= j(render partial: "/oak/admin/posts/post_assets") %>";
