@@ -1,7 +1,7 @@
 require_dependency "oak/application_controller"
 
 module Oak
-  class Admin::PostAssetsController < ApplicationController
+  class Admin::PostAssetsController < Admin::ApplicationController
     
     def index
       @post_assets = PostAsset.all.order( created_at: :desc ).page( params[:page] )

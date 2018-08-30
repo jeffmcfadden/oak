@@ -1,3 +1,5 @@
+require 'aws-sdk-s3'
+
 module Oak
   class PostAsset < ApplicationRecord
     has_one_attached :file

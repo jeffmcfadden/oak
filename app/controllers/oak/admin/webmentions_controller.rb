@@ -1,18 +1,20 @@
 require_dependency "oak/application_controller"
 
 module Oak
-  class Admin::WebmentionsController < ApplicationController
+  class Admin::WebmentionsController < Admin::ApplicationController
+  
+    
   
     def index
-      @webmentions = IncomingWebmentions.all.order( created_at: :desc )
+      @webmentions = IncomingWebmention.all.order( created_at: :desc ).page( params[:page] )
     end
     
     def show
-      @webmention = Webmention.find params[:id]
+      @webmention = IncomingWebmention.find params[:id]
     end
     
     def destroy
-      @webmention = Webmention.find params[:id]
+      @webmention = IncomingWebmention.find params[:id]
       @webmention.destroy
       
       redirect_to [:admin, :webmentions]

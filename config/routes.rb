@@ -4,6 +4,7 @@ Oak::Engine.routes.draw do
   namespace :admin do
     resources :posts
     resources :post_assets
+    resources :webmentions
   end
   
   namespace :micropub do
@@ -23,8 +24,9 @@ Oak::Engine.routes.draw do
     
     post '/token', to: 'indieauth#request_token'
     get '/token',  to: 'indieauth#verify_token'
-    
   end
+
+  post '/webmention', to: 'webmentions#create', as: :incoming_webmention
   
   root to: 'posts#index'
 end

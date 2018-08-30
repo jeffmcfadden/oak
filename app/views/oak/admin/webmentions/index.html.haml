@@ -1,0 +1,40 @@
+.row
+  .col-xs-8
+    %h1 Incoming Webmentions
+
+  .col-xs-4.text-right
+
+.row
+  .col-xs-12
+
+    - if @webmentions.count == 0
+      %strong
+        No webmentions yet.
+
+    %table.table
+      %tr
+        %th
+        %th
+          Source IP
+        %th
+          Source
+        %th
+          Target
+        %th
+    
+      - @webmentions.each do |webmention|
+        %tr
+          %td
+            #{webmention.created_at}
+          %td
+            #{webmention.ip_address}
+          %td
+            #{webmention.source_url}
+          %td
+            #{webmention.target_url}
+          %td
+            = link_to "Destroy", admin_webmention_path( webmention ), method: :delete
+
+.row
+  .col-xs-12
+    = paginate @webmentions
