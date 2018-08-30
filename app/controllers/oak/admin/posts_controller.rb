@@ -13,14 +13,13 @@ module Oak
     
     def send_webmentions
       set_post
-      
-      @post.send_webmentions
+      @post.send_webmentions      
+      redirect_to [:admin, :posts]
     end
     
     def new
       @post = Post.new
       @post_asset = PostAsset.new
-      
     end
     
     def create

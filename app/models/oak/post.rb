@@ -41,7 +41,7 @@ module Oak
       urls = URI.extract( body_html, ["http", "https"] )
       
       urls.uniq.each do |url|
-        OutgoingWebmention.send( target_url: url, post: self )
+        OutgoingWebmention.validate_and_send( target_url: url, post: self )
       end
     end
     
