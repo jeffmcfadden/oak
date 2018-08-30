@@ -1,0 +1,33 @@
+.row
+  .col-xs-8
+    %h1 Outgoing Webmentions
+
+  .col-xs-4.text-right
+
+.row
+  .col-xs-12
+
+    - if @webmentions.count == 0
+      %strong
+        No webmentions yet.
+
+    %table.table
+      %tr
+        %th
+        %th
+          Post
+        %th
+          Target
+    
+      - @webmentions.each do |webmention|
+        %tr
+          %td
+            #{webmention.created_at}
+          %td
+            #{webmention.post.id} #{webmention.post.title}
+          %td
+            #{webmention.target_url}
+
+.row
+  .col-xs-12
+    = paginate @webmentions

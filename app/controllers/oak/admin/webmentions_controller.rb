@@ -9,6 +9,10 @@ module Oak
       @webmentions = IncomingWebmention.all.order( created_at: :desc ).page( params[:page] )
     end
     
+    def outgoing
+      @webmentions = OutgoingWebmention.all.order( created_at: :desc ).page( params[:page] )
+    end
+    
     def show
       @webmention = IncomingWebmention.find params[:id]
     end

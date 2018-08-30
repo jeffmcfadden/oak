@@ -2,9 +2,18 @@ Oak::Engine.routes.draw do
   resources :posts
 
   namespace :admin do
-    resources :posts
+    resources :posts do
+      member do
+        post :send_webmentions
+      end
+    end
+    
     resources :post_assets
-    resources :webmentions
+    resources :webmentions do
+      collection do
+        get :outgoing
+      end
+    end
   end
   
   namespace :micropub do

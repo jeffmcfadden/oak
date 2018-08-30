@@ -11,6 +11,12 @@ module Oak
       set_post
     end
     
+    def send_webmentions
+      set_post
+      
+      @post.send_webmentions
+    end
+    
     def new
       @post = Post.new
       @post_asset = PostAsset.new

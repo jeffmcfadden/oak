@@ -38,9 +38,9 @@ module Oak
     end
     
     def send_webmentions
-      urls = URI.extract( body, ["http", "https"] )
+      urls = URI.extract( body_html, ["http", "https"] )
       
-      urls.each do |url|
+      urls.uniq.each do |url|
         OutgoingWebmention.send( target_url: url, post: self )
       end
     end

@@ -9,18 +9,23 @@
   .col-xs-12
     
     - @posts.each do |post|
-      %section{ style: "margin-bottom: 1.5em;"}
-        %strong
-          = link_to "#{post.title}", [:edit, :admin, post]
+      .row
+        .col-xs-10
+          %section{ style: "margin-bottom: 1.5em;"}
+            %strong
+              = link_to "#{post.title}", [:edit, :admin, post]
         
-        %p
-          = simple_format( post.body.truncate( 60 ) )
+            %p
+              = simple_format( post.body.truncate( 60 ) )
         
-        %small
-          = link_to post.published_at.in_time_zone.strftime("%b %-d, %Y %-l:%M%P"), [:edit, :admin, post]
+            %small
+              = link_to post.published_at.in_time_zone.strftime("%b %-d, %Y %-l:%M%P"), [:edit, :admin, post]
           
-          - if post.draft?
-            &nbsp;&nbsp;
-            = link_to [:edit, :admin, post] do
-              .label.label-warning
-                DRAFT
+              - if post.draft?
+                &nbsp;&nbsp;
+                = link_to [:edit, :admin, post] do
+                  .label.label-warning
+                    DRAFT
+        .col-xs-2.text-right
+          .small
+            = link_to "Send Webmentions", [:send_webmentions, :admin, post]
