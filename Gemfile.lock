@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    oak-rails (0.1.18)
+    oak-rails (0.2.0)
       acts-as-taggable-on (~> 6.0)
       devise (>= 4.5.0)
       friendly_id (>= 5.2.0)

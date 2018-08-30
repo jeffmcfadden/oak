@@ -1,6 +1,8 @@
 module Oak
   class Post < ApplicationRecord
     belongs_to :author, class_name: Oak.author_class.to_s, optional: true
+    has_many :outgoing_webmentions
+    
     before_validation :set_author
 
     extend FriendlyId
@@ -33,6 +35,14 @@ module Oak
       end
       
       body_with_asset_urls
+    end
+    
+    def send_webmentions
+      urls = URI.extract( body, ["http", "https"] )
+      
+      urls.each do |url|
+        OutgoingWebmention.send( target_url: url, post: self )
+      end
     end
     
     private
