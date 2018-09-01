@@ -31,6 +31,11 @@ module Oak
     end
     
     def micropub_get
+      if params[:q] == "config"
+        render json: { "media-endpoint" => micropub_media_url }
+      else
+        render plain: ""
+      end
     end
     
     def media

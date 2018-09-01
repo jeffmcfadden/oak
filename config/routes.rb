@@ -17,10 +17,9 @@ Oak::Engine.routes.draw do
   end
   
   namespace :micropub do
-    post '/', to: 'micropub#micropub_post'
-    get  '/', to: 'micropub#micropub_get'
-    post '/media', to: 'micropub#media'
-    
+    post '/', to: 'micropub#micropub_post', as: :post
+    get  '/', to: 'micropub#micropub_get',  as: :get
+    post '/media', to: 'micropub#media',    as: :media
   end
   
   namespace :indieauth do
