@@ -53,13 +53,13 @@ $ rails db:migrate
 * Support for Media uploads via Admin
 * Receiving Webmentions (just displayed in admin at this time)
 * Sending Webmentions (sent manually at this time)
+* Micropub Media Endpoint
 
 ## Still Working On
 
 * Easier/Better Integration with the host application. Still requires a lot of hand-work to get things working smoothly.
 * Syndication
 * Pubsub
-* Micropub Media Endpoint
 
 ## Contributing
 Fork, pull request.

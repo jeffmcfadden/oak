@@ -33,6 +33,13 @@ module Oak
     def micropub_get
     end
     
+    def media
+      @post_asset = PostAsset.create file: params[:file]
+      response.set_header 'Location', @post_asset.public_url
+
+      render plain: "Location: #{@post_asset.public_url}"
+    end
+    
     private
     
       def authenticate_request
