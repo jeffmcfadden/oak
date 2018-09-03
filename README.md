@@ -57,11 +57,16 @@ $ rails db:migrate
 
 ## Still Working On
 
+* Updating Posts
+* Deleting Posts
+* Undeleting Posts
 * Easier/Better Integration with the host application. Still requires a lot of hand-work to get things working smoothly.
 * Syndication
 * Pubsub
 
-## Micropub Spec Support Status
+## Micropub Spec Implementation Status
+
+The following features constitute the [W3C Micropub Spec](https://www.w3.org/TR/micropub/#feature-li-1).
 
 * :white_check_mark: Discovering the Micropub endpoint given the profile URL of a user
 * :white_check_mark: Authenticating requests by including the access token in the HTTP `Authorization` header
