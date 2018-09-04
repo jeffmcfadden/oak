@@ -42,7 +42,7 @@ module Oak
       @post_asset = PostAsset.create file: params[:file]
       response.set_header 'Location', @post_asset.public_url
 
-      render plain: "Location: #{@post_asset.public_url}"
+      render plain: "Location: #{@post_asset.public_url}", status: 201
     end
     
     private
