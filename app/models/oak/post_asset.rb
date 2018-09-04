@@ -25,7 +25,12 @@ module Oak
       bucket     = ENV["AWS_BUCKET"]
     
       s3 = Aws::S3::Client.new( { region: region, credentials: Aws::Credentials.new( access_key, secret_key ) } )
-      s3.put_object_acl( { acl: "public-read", bucket: bucket, key: self.file.blob.key } )
+      
+      # Force the content type into AWS, because somehow ActiveStorage isn't doing that.
+      s3.copy_object( { bucket: ENV["AWS_BUCKET"], key: self.file.blob.key, copy_source: "#{ENV["AWS_BUCKET"]}/#{self.file.blob.key}", content_type: self.file.blob.content_type, metadata_directive: 'REPLACE' } )
+      
+      # And, make it actually public.
+      s3.put_object_acl( { acl: "public-read", bucket: bucket, key: self.file.blob.key } )      
     end
     
   end

@@ -27,7 +27,7 @@ module Oak
         
         @post = Post.new
         # @post.title        = params[:name]
-        @post.body         = params[:properties][:content]
+        @post.body         = params[:properties][:content].first
         @post.live         = true
         # @post.published_at = params[:published]
         
