@@ -23,6 +23,23 @@ module Oak
           render json: { error: "invalid_request", error_description: "#{@post.errors.full_messages.join(', ')}" }, status: 400
           return
         end
+      elsif params[:type].class == Array && params[:type].first == "h-entry"
+        
+        @post = Post.new
+        # @post.title        = params[:name]
+        @post.body         = params[:properties][:content]
+        @post.live         = true
+        # @post.published_at = params[:published]
+        
+        if @post.valid?
+          @post.save
+          render plain: 'Post Created', location: @post, status: 201
+        else
+          Rails.logger.error "Post did not validate."
+          render json: { error: "invalid_request", error_description: "#{@post.errors.full_messages.join(', ')}" }, status: 400
+          return
+        end
+        
       else
         Rails.logger.error "Unrecognized request type."
         render json: { error: "invalid_request", error_description: "Unrecognized request type. No h_entry found." }, status: 400
