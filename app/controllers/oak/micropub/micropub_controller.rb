@@ -77,7 +77,7 @@ module Oak
       
       
       if properties[:category].present? && properties[:category].class == Array
-        @post.tag_list = params[:category].join( "," )
+        @post.tag_list = properties[:category].join( "," )
       end
     end
     
