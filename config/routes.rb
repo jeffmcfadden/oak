@@ -1,5 +1,9 @@
 Oak::Engine.routes.draw do
-  resources :posts
+  resources :posts do
+    collection do
+      get '/category/:category', to: 'posts#category', as: :category
+    end
+  end
 
   namespace :admin do
     resources :posts do

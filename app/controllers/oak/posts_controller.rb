@@ -17,5 +17,9 @@ module Oak
       @post = Post.live.friendly.find( params[:id] )
     end
     
+    def category
+      @posts = Post.tagged_with( params[:category] ).live.order( published_at: :desc ).page(params[:page]).per(Oak.posts_per_page)
+    end
+    
   end
 end
