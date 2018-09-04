@@ -25,13 +25,23 @@ module Oak
     def build_post_from_form
       @post = Post.new
       @post.title        = params[:name]
-      @post.body         = params[:content]
       @post.live         = true
       @post.published_at = params[:published]
       
       if params[:category].present? && params[:category].class == Array
         @post.tag_list = params[:category].join( "," )
+      elsif params[:category].present? && params[:category].class == String
+        @post.tag_list = params[:category]
       end      
+      
+      content = params[:content]
+      
+      if params[:photo].present?
+        content += "\n\n"
+        content += "<img src=\"#{params[:photo]}\" />\n"
+      end
+      
+      @post.body         = content
     end
     
     def build_post_from_json
