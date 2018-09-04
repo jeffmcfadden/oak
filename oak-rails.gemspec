@@ -24,5 +24,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'redcarpet',           ">= 3.4.0"
   s.add_dependency 'acts-as-taggable-on', '~> 6.0'
   
+  # Right now we're making some (bad) assumptions about active storage
+  s.add_dependency 'aws-sdk-s3',          '>= 1.17.0'
+  
   s.add_development_dependency 'sqlite3'
 end

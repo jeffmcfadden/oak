@@ -27,6 +27,7 @@ module Oak
       s3 = Aws::S3::Client.new( { region: region, credentials: Aws::Credentials.new( access_key, secret_key ) } )
       
       # Force the content type into AWS, because somehow ActiveStorage isn't doing that.
+      # Thanks to this page for the info I needed to figure out how to even set the content type at all: https://github.com/aws/aws-sdk-js/issues/1092
       s3.copy_object( { bucket: ENV["AWS_BUCKET"], key: self.file.blob.key, copy_source: "#{ENV["AWS_BUCKET"]}/#{self.file.blob.key}", content_type: self.file.blob.content_type, metadata_directive: 'REPLACE' } )
       
       # And, make it actually public.
