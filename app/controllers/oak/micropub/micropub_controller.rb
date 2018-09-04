@@ -31,16 +31,7 @@ module Oak
       
       if params[:category].present? && params[:category].class == Array
         @post.tag_list = params[:category].join( "," )
-      end
-      
-      if @post.valid?
-        @post.save
-        render plain: 'Post Created', location: @post, status: 201
-      else
-        Rails.logger.error "Post did not validate."
-        render json: { error: "invalid_request", error_description: "#{@post.errors.full_messages.join(', ')}" }, status: 400
-        return
-      end
+      end      
     end
     
     def build_post_from_json
