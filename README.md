@@ -66,6 +66,8 @@ $ rails db:migrate
 
 ## Micropub Spec Implementation Status
 
+Currently **13/34** test passing at the micropub.rocks tests: [https://micropub.rocks/implementation-reports/servers/278/Ix5NV57E72H4mWjUhdIh](https://micropub.rocks/implementation-reports/servers/278/Ix5NV57E72H4mWjUhdIh)
+
 The following features constitute the [W3C Micropub Spec](https://www.w3.org/TR/micropub/#feature-li-1).
 
 * :white_check_mark: Discovering the Micropub endpoint given the profile URL of a user
@@ -74,12 +76,12 @@ The following features constitute the [W3C Micropub Spec](https://www.w3.org/TR/
 * :x: Limiting the ability to create posts given an access token by requiring that the access token contain at least one OAuth 2.0 scope value
 * :white_check_mark: Creating a post using `x-www-form-urlencoded` syntax with one or more properties
 * :white_check_mark: Creating a post using JSON syntax with one or more properties
-* :question: Creating a post using `x-www-form-urlencoded` syntax with multiple values of the same property name
-* :question: Creating a post using JSON syntax with multiple values of the same property name
+* :white_check_mark: Creating a post using `x-www-form-urlencoded` syntax with multiple values of the same property name
+* :white_check_mark: Creating a post using JSON syntax with multiple values of the same property name
 * :x: Creating a post using JSON syntax including a nested Microformats2 object
 * :white_check_mark: Uploading a file to the specified Media Endpoint
 * :white_check_mark: Creating a post with a file by sending the request as `multipart/form-data` to the Micropub endpoint
-* :x: Creating a post with a photo referenced by URL
+* :white_check_mark: Creating a post with a photo referenced by URL
 * :x: Creating a post with a photo referenced by URL that includes image alt text
 * :white_check_mark: Creating a post where the request contains properties the server does not recognize
 * :white_check_mark: Returning `HTTP 201 Created` and a `Location` header when creating a post
@@ -95,7 +97,7 @@ The following features constitute the [W3C Micropub Spec](https://www.w3.org/TR/
 * :x: Deleting a post using JSON syntax
 * :x: Undeleting a post using `x-www-form-urlencoded` syntax
 * :x: Undeleting a post using JSON syntax
-* :question: Uploading a photo to the Media Endpoint and using the resulting URL when creating a post
+* :white_check_mark: Uploading a photo to the Media Endpoint and using the resulting URL when creating a post
 * :white_check_mark: Querying the Micropub endpoint with `q=config` to retrieve the Media Endpoint and syndication targets if specified
 * :x: Querying the Micropub endpoint with `q=syndicate-to` to retrieve the list of syndication targets
 * :x: Querying the Micropub endpoint for a post's source content without specifying a list of properties
