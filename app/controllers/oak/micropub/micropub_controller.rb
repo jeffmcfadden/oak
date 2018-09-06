@@ -53,7 +53,13 @@ module Oak
       if properties[:html].present? && properties[:content].empty?
         content         = properties[:html].first
       else
-        content         = properties[:content].first
+        content = properties[:content].first
+        
+        # The weird h-entry format with html in the content element.
+        if content.class == Hash && content[:html].present?
+          content = content[:html]
+        end
+        
       end
       
       if properties[:photo].present? && properties[:photo].class == Array
