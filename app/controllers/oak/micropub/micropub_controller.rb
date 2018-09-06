@@ -50,13 +50,15 @@ module Oak
       @post = Post.new
       @post.title        = params[:name]&.first
       
+      content = ""
+      
       if properties[:html].present? && properties[:content].empty?
         content         = properties[:html].first
       else
         content = properties[:content].first
         
         # The weird h-entry format with html in the content element.
-        if content.class == Hash && content[:html].present?
+        if (content[:html].present? rescue false)
           content = content[:html]
         end
         
