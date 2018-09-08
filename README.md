@@ -86,11 +86,11 @@ The following features constitute the [W3C Micropub Spec](https://www.w3.org/TR/
 * :white_check_mark: Creating a post where the request contains properties the server does not recognize
 * :white_check_mark: Returning `HTTP 201 Created` and a `Location` header when creating a post
 * :x: Returning `HTTP 202 Created` and a `Location` header when creating a post
-* :x: Updating a post and replacing all values of a property
-* :x: Updating a post and adding a value to a property
-* :x: Updating a post and removing a value from a property
-* :x: Updating a post and removing a property
-* :x: Returning `HTTP 200 OK` when updating a post
+* :white_check_mark: Updating a post and replacing all values of a property
+* :white_check_mark: Updating a post and adding a value to a property
+* :white_check_mark: Updating a post and removing a value from a property
+* :white_check_mark: Updating a post and removing a property
+* :white_check_mark: Returning `HTTP 200 OK` when updating a post
 * :x: Returning `HTTP 201 Created` when updating a post if the update cause the post URL to change
 * :x: Returning `HTTP 204 No Content` when updating a post
 * :x: Deleting a post using `x-www-form-urlencoded` syntax
