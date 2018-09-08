@@ -32,7 +32,11 @@ class MicropubTest < ActionDispatch::IntegrationTest
   test "Creating a post using x-www-form-urlencoded syntax with one or more properties" do
     post micropub_post_path, params: "h=entry&content=Micropub+test+of+creating+a+basic+h-entry", headers: { "Authorization" => "Bearer #{@token.access_token}"}
     
+    @post = Oak::Post.last
+    
     assert_equal 201, status    
+    assert_equal "Micropub test of creating a basic h-entry", @post.body
+    assert_equal post_url(@post), headers['Location']    
   end
 
 
