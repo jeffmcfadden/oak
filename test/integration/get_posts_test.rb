@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class NavigationTest < ActionDispatch::IntegrationTest
+class GetPostsTest < ActionDispatch::IntegrationTest
 
   include Oak::Engine.routes.url_helpers
 
