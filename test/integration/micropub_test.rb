@@ -39,5 +39,23 @@ class MicropubTest < ActionDispatch::IntegrationTest
     assert_equal post_url(@post), headers['Location']    
   end
 
+  test "Create an h-entry post (JSON)" do
+    
+    data = {
+      "type" => ["h-entry"],
+      "properties" => {
+        "content" => ["Micropub test of creating an h-entry with a JSON request"]
+      }
+    }
+    
+    post micropub_post_path, params: data.to_json, headers: { "Authorization" => "Bearer #{@token.access_token}", "Content-type" => "application/json" }
+    
+    @post = Oak::Post.last
+    
+    assert_equal 201, status    
+    assert_equal "Micropub test of creating an h-entry with a JSON request", @post.body
+    assert_equal post_url(@post), headers['Location']    
+  end
+
 
 end
