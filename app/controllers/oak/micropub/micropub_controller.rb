@@ -49,20 +49,8 @@ module Oak
       
       @post = Post.new
       @post.title        = params[:name]&.first
-      
-      content = ""
-      
-      if properties[:html].present? && properties[:content].empty?
-        content         = properties[:html].first
-      else
-        content = properties[:content].first
-        
-        # The weird h-entry format with html in the content element.
-        if (content[:html].present? rescue false)
-          content = content[:html]
-        end
-        
-      end
+
+      content = content_from_json_params( params )
       
       if properties[:photo].present? && properties[:photo].class == Array
         content += "\n\n"
@@ -88,6 +76,35 @@ module Oak
         @post.tag_list = properties[:category].join( "," )
       end
     end
+    
+    def update_post_and_return
+      @post = Post.find_by_url( params[:url] )
+      return unless @post.present?
+      
+      
+      
+    end
+    
+    def content_from_json_params( params )
+      properties = params[:properties]
+
+      content = ""
+      
+      if properties[:html].present? && properties[:content].empty?
+        content         = properties[:html].first
+      else
+        content = properties[:content].first
+        
+        # The weird h-entry format with html in the content element.
+        if (content[:html].present? rescue false)
+          content = content[:html]
+        end
+        
+      end
+      
+      content
+    end
+    
     
     def save_post_and_return
       if @post.valid?

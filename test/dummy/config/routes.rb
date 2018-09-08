@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  mount Oak::Engine => "/oak"
+  mount Oak::Engine => "/"
 end

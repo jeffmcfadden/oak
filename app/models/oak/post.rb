@@ -17,6 +17,18 @@ module Oak
     before_validation :set_published_at_to_now_if_nil
     before_validation :auto_set_micro_tag
     
+    def self.find_by_url( url )
+      uri = URI( url )
+      
+      begin
+        post_id = Rails.application.routes.recognize_path( uri.path )[:id].to_i
+        return Post.find( post_id )
+      rescue StandardError => err
+        Rails.logger.error "find_by_url failed: #{err}"
+        return nil
+      end
+    end
+    
     def draft?
       !live
     end
