@@ -59,7 +59,9 @@ module Oak
     
     private
       def set_author
-        self.author = Oak.author_class.find_by(id: author_id.to_i)
+        Rails.logger.debug "Post#set_author"
+        
+        self.author = (Oak.author_class.find_by(id: author_id.to_i) rescue nil)
       end
       
       def set_published_at_to_now_if_nil

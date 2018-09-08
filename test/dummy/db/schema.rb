@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_08_164125) do
+ActiveRecord::Schema.define(version: 2018_09_09_120000) do
 
   create_table "oak_incoming_webmentions", force: :cascade do |t|
     t.string "source_url"
@@ -94,6 +94,13 @@ ActiveRecord::Schema.define(version: 2018_09_08_164125) do
     t.string "name"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email"
+    t.string "password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

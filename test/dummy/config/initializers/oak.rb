@@ -1,6 +1,3 @@
-class User
-end
-
 Oak.configure do |config|
   config.author_class = "User"
   

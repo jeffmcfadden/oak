@@ -81,6 +81,9 @@ module Oak
       @post = Post.find_by_url( params[:url] )
       return unless @post.present?
       
+      # params[:replace].each do |k,v|
+      #   if k == :content
+      #     @post.body = content_from_json_params
       
       
     end
