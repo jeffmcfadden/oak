@@ -38,6 +38,20 @@ class MicropubTest < ActionDispatch::IntegrationTest
     assert_equal "Micropub test of creating a basic h-entry", @post.body
     assert_equal post_url(@post), headers['Location']    
   end
+  
+  test "Create an h-entry post with multiple categories (form-encoded)" do
+    skip( "Pending" )
+  end
+  
+  test "Create an h-entry with a photo referenced by URL (form-encoded)" do
+    skip( "Pending" )
+  end
+  
+  test "Create an h-entry post with one category (form-encoded)" do
+    skip( "Pending" )
+  end
+  
+  
 
   test "Create an h-entry post (JSON)" do
     
@@ -56,6 +70,116 @@ class MicropubTest < ActionDispatch::IntegrationTest
     assert_equal "Micropub test of creating an h-entry with a JSON request", @post.body
     assert_equal post_url(@post), headers['Location']    
   end
+
+  test "Create an h-entry post with multiple categories (JSON)" do
+  end
+  
+  test "Create an h-entry with HTML content (JSON)" do
+  end
+  
+  test "Create an h-entry with a photo referenced by URL (JSON)" do
+  end
+  
+  test "Create an h-entry post with a nested object (JSON)" do
+  end
+  
+  test "Create an h-entry post with a photo with alt text (JSON)" do
+  end
+  
+  test "Create an h-entry with multiple photos referenced by URL (JSON)" do
+  end
+  
+  
+  
+  
+  test "Create an h-entry with a photo (multipart)" do
+  end
+  
+  test "Create an h-entry with two photos (multipart)" do
+  end
+  
+  
+  
+  
+  test "Replace a property" do
+  end
+  
+  test "Add a value to an existing property" do
+  end
+  
+  test "Add a value to a non-existent property" do
+  end
+  
+  test "Remove a value from a property" do
+  end
+  
+  test "Remove a property" do
+  end
+  
+  test "Reject the request if operation is not an array" do
+  end
+  
+  
+  
+  
+  
+  test "Delete a post (form-encoded)" do
+  end
+  
+  test "Delete a post (JSON)" do
+  end
+  
+  test "Undelete a post (form-encoded)" do
+  end
+  
+  test "Undelete a post (JSON)" do
+  end
+  
+  
+  
+  test "Configuration Query" do
+  end
+  
+  test "Syndication Endpoint Query" do
+  end
+  
+  test "Source Query (All Properties)" do
+  end
+  
+  test "Source Query (Specific Properties)" do
+  end
+  
+  
+  
+  
+  
+  test "Upload a jpg to the Media Endpoint" do
+  end
+  
+  test "Upload a png to the Media Endpoint" do
+  end
+  
+  test "Upload a gif to the Media Endpoint" do
+  end
+  
+  
+  
+  
+  test "Accept access token in HTTP header" do
+  end
+  
+  test "Accept access token in POST body" do
+  end
+  
+  test "Does not store access token property" do
+  end
+  
+  test "Rejects unauthenticated requests" do
+  end
+  
+  test "Rejects unauthorized access tokens" do
+  end
+
 
 
 end
