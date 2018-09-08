@@ -21,10 +21,10 @@ module Oak
       uri = URI( url )
       
       begin
-        post_id = Rails.application.routes.recognize_path( uri.path )[:id].to_i
-        return Post.find( post_id )
+        post_id = Rails.application.routes.recognize_path( uri.path )[:id]
+        return Post.friendly.find( post_id )
       rescue StandardError => err
-        Rails.logger.error "find_by_url failed: #{err}"
+        puts Rails.application.routes.recognize_path( uri.path )
         return nil
       end
     end

@@ -13,7 +13,7 @@ module Oak
       elsif params[:type].class == Array && params[:type].first == "h-entry"
         build_post_from_json
         save_post_and_return
-      elsif params[:action] == "update"
+      elsif request.POST[:action] == "update"
         update_post_and_return
       else
         Rails.logger.error "Unrecognized request type."
@@ -79,17 +79,77 @@ module Oak
     
     def update_post_and_return
       @post = Post.find_by_url( params[:url] )
-      return unless @post.present?
       
-      # params[:replace].each do |k,v|
-      #   if k == :content
-      #     @post.body = content_from_json_params
+      if @post.nil?
+        render plain: 'Not found', status: 404
+        return
+      end
       
+      if params[:replace].present?
+        params[:replace].each do |k,v|
+          if k.to_sym == :content
+            if v.class == Array
+              @post.body = v.first
+            elsif v.class == Hash && v[:html].present?
+              @post.body = v[:html]
+            end
+          elsif k.to_sym == :category
+            @post.tag_list = v.join( ',' )
+          end
+        end
+      end
+      
+      if params[:add].present?
+        params[:add].each do |k,v|
+          if k.to_sym == :category
+            @post.tag_list.add(v)
+          end
+        end
+      end
+      
+      if params[:delete].present?
+        
+        if params[:delete].class == Array
+          params[:delete].each do |property|
+            if property.to_sym == :category
+              @post.tag_list = ""
+            else
+              Rails.logger.debug "Unsupported property removal: #{property}"
+            end
+          end
+          
+        elsif params[:delete].class == Hash || params[:delete].class == ActionController::Parameters
+          
+          params[:delete].each do |k,v|
+            if k.to_sym == :category
+              if v.class == Array
+                v.each{ |t| @post.tag_list.remove t }
+              end
+            else
+              Rails.logger.debug "Unsupported property removal: #{k}"
+            end
+          end
+        else
+          Rails.logger.debug "Delete is #{params[:delete].class}, an unsupported type."
+        end
+        
+      end
+      
+      if @post.valid?
+        @post.save
+        render plain: 'Post updated', location: @post, status: 201
+      else
+        Rails.logger.error "Post did not validate."
+        render json: { error: "invalid_request", error_description: "#{@post.errors.full_messages.join(', ')}" }, status: 400
+        return
+      end
       
     end
     
     def content_from_json_params( params )
       properties = params[:properties]
+      
+      properties = {} if properties.nil?
 
       content = ""
       

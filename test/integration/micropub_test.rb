@@ -74,7 +74,6 @@ class MicropubTest < ActionDispatch::IntegrationTest
   
 
   test "Create an h-entry post (JSON)" do
-    
     data = {
       "type" => ["h-entry"],
       "properties" => {
@@ -92,21 +91,162 @@ class MicropubTest < ActionDispatch::IntegrationTest
   end
 
   test "Create an h-entry post with multiple categories (JSON)" do
+    data = {
+      "type" => ["h-entry"],
+      "properties" => {
+        "content" => ["Micropub test of creating an h-entry with a JSON request containing multiple categories. This post should have two categories, test1 and test2."],
+        "category" => [
+          "tag1",
+          "tag2"
+        ]
+      }
+    }
+    
+    post micropub_post_path, params: data.to_json, headers: { "Authorization" => "Bearer #{@token.access_token}", "Content-type" => "application/json" }
+    
+    @post = Oak::Post.last
+    
+    assert_equal 201, status    
+    assert @post.tag_list.include? "tag1"
+    assert @post.tag_list.include? "tag2"
+    assert_equal post_url(@post), headers['Location']    
   end
   
   test "Create an h-entry with HTML content (JSON)" do
+    data = {
+      "type" => ["h-entry"],
+      "properties" => {
+        "content" => [{
+          "html" => "<p>This post has <b>bold</b> and <i>italic</i> text.</p>"
+        }],
+        "category" => [
+          "tag1",
+          "tag2"
+        ]
+      }
+    }
+    
+    post micropub_post_path, params: data.to_json, headers: { "Authorization" => "Bearer #{@token.access_token}", "Content-type" => "application/json" }
+    
+    @post = Oak::Post.last
+    
+    assert_equal 201, status    
+    assert @post.body.include? "<p>This post has <b>bold</b> and <i>italic</i> text.</p>"
+    assert_equal post_url(@post), headers['Location']    
   end
   
   test "Create an h-entry with a photo referenced by URL (JSON)" do
+    data = {
+      "type" => ["h-entry"],
+      "properties" => {
+        "content" =>["Micropub test of creating a photo referenced by URL. This post should include a photo of a sunset."],
+        "photo" => ["https://micropub.rocks/media/sunset.jpg"]
+      }
+    }
+    
+    post micropub_post_path, params: data.to_json, headers: { "Authorization" => "Bearer #{@token.access_token}", "Content-type" => "application/json" }
+    
+    @post = Oak::Post.last
+    
+    assert_equal 201, status    
+    assert @post.body.include? "test of creating a photo"
+    assert @post.body.include? "sunset.jpg"
+    assert_equal post_url(@post), headers['Location']
   end
   
   test "Create an h-entry post with a nested object (JSON)" do
+    data = {
+        "type" => [
+            "h-entry"
+        ],
+        "properties" => {
+            "published": [
+                "2017-05-31T12:03:36-07:00"
+            ],
+            "content" => [
+                "Lunch meeting"
+            ],
+            "checkin" => [
+                {
+                    "type" => [
+                        "h-card"
+                    ],
+                    "properties" => {
+                        "name" => ["Los Gorditos"],
+                        "url" => ["https://foursquare.com/v/502c4bbde4b06e61e06d1ebf"],
+                        "latitude" => [45.524330801154],
+                        "longitude" => [-122.68068808051],
+                        "street-address" => ["922 NW Davis St"],
+                        "locality" => ["Portland"],
+                        "region" => ["OR"],
+                        "country-name" => ["United States"],
+                        "postal-code" => ["97209"]
+                    }
+                }
+            ]
+        }
+    }
+    
+    post micropub_post_path, params: data.to_json, headers: { "Authorization" => "Bearer #{@token.access_token}", "Content-type" => "application/json" }
+    
+    @post = Oak::Post.last
+    
+    # assert_equal 201, status
+    # assert @post.body.include? "test of creating a photo"
+    # assert @post.body.include? "sunset.jpg"
+    # assert_equal post_url(@post), headers['Location']
+
+    skip( "Not yet implemented" )
+    
   end
   
   test "Create an h-entry post with a photo with alt text (JSON)" do
+    data = {
+      "type" => ["h-entry"],
+      "properties" => {
+        "content" =>["Micropub test of creating a photo referenced by URL. This post should include a photo of a sunset."],
+        "photo" => [
+              {
+                "value" => "https://micropub.rocks/media/sunset.jpg",
+                "alt" => "Photo of a sunset"
+              }
+            ]
+      }
+    }
+    
+    post micropub_post_path, params: data.to_json, headers: { "Authorization" => "Bearer #{@token.access_token}", "Content-type" => "application/json" }
+    
+    @post = Oak::Post.last
+    
+    assert_equal 201, status    
+    # assert @post.body.include? "test of creating a photo"
+    # assert @post.body.include? "sunset.jpg"
+    # assert @post.body.include? "Photo of a sunset"
+    # assert_equal post_url(@post), headers['Location']
+    skip( "Not yet implemented." )
   end
   
   test "Create an h-entry with multiple photos referenced by URL (JSON)" do
+    data = {
+      "type" => ["h-entry"],
+      "properties" => {
+        "content" =>["Micropub test of creating a photo referenced by URL. This post should include a photo of a sunset."],
+        "photo" => [
+          "https://micropub.rocks/media/sunset.jpg",
+          "https://micropub.rocks/media/city-at-night.jpg"
+        ]
+      }
+    }
+    
+    post micropub_post_path, params: data.to_json, headers: { "Authorization" => "Bearer #{@token.access_token}", "Content-type" => "application/json" }
+    
+    @post = Oak::Post.last
+    
+    assert_equal 201, status    
+    assert @post.body.include? "test of creating a photo"
+    assert @post.body.include? "sunset.jpg"
+    assert @post.body.include? "city-at-night.jpg"
+    assert_equal post_url(@post), headers['Location']
   end
   
   
@@ -122,18 +262,111 @@ class MicropubTest < ActionDispatch::IntegrationTest
   
   
   test "Replace a property" do
+    @post = Oak::Post.create title: "Test post for updating", body: "This is the original text."
+    
+    data = {
+      "action" => "update",
+      "url" => "#{URI.encode( post_url( @post ) )}",
+      "replace" => {
+        "content" => ["This is the updated text. If you can see this you passed the test!"]
+      }
+    }
+        
+    post micropub_post_path, params: data.to_json, headers: { "Authorization" => "Bearer #{@token.access_token}", "Content-type" => "application/json" }
+    
+    @post = @post.reload
+    
+    assert_equal 201, status    
+    assert @post.body.include? "This is the updated text"
+    assert_equal post_url(@post), headers['Location']    
   end
   
   test "Add a value to an existing property" do
+    @post = Oak::Post.create title: "Test post for updating", body: "This is the original text."
+    @post.tag_list = "test1"
+    @post.save
+    
+    data = {
+      "action" => "update",
+      "url" => "#{URI.encode( post_url( @post ) )}",
+      "add" => {
+        "category" => ["test2"]
+      }
+    }
+        
+    post micropub_post_path, params: data.to_json, headers: { "Authorization" => "Bearer #{@token.access_token}", "Content-type" => "application/json" }
+    
+    @post = @post.reload
+    
+    assert_equal 201, status    
+    assert @post.tag_list.include? "test1"
+    assert @post.tag_list.include? "test2"
+    assert_equal post_url(@post), headers['Location']    
   end
   
   test "Add a value to a non-existent property" do
+    @post = Oak::Post.create title: "Test post for updating", body: "This is the original text."
+    
+    data = {
+      "action" => "update",
+      "url" => "#{URI.encode( post_url( @post ) )}",
+      "add" => {
+        "category" => ["test2"]
+      }
+    }
+        
+    post micropub_post_path, params: data.to_json, headers: { "Authorization" => "Bearer #{@token.access_token}", "Content-type" => "application/json" }
+    
+    @post = @post.reload
+    
+    assert_equal 201, status    
+    assert_equal false, @post.tag_list.include?("test1")
+    assert @post.tag_list.include? "test2"
+    assert_equal post_url(@post), headers['Location']    
   end
   
   test "Remove a value from a property" do
+    @post = Oak::Post.create title: "Test post for removing", body: "This is the original text."
+    @post.tag_list = "test1, test2"
+    @post.save
+    
+    data = {
+      "action" => "update",
+      "url" => "#{URI.encode( post_url( @post ) )}",
+      "delete" => {
+        "category" => ["test2"]
+      }
+    }
+        
+    post micropub_post_path, params: data.to_json, headers: { "Authorization" => "Bearer #{@token.access_token}", "Content-type" => "application/json" }
+    
+    @post = @post.reload
+    
+    assert_equal 201, status    
+    assert_equal true,  @post.tag_list.include?("test1")
+    assert_equal false, @post.tag_list.include?("test2")
+    assert_equal post_url(@post), headers['Location']    
   end
   
   test "Remove a property" do
+    @post = Oak::Post.create title: "Test post for removing", body: "This is the original text."
+    @post.tag_list = "test1, test2"
+    @post.save
+    
+    data = {
+      "action" => "update",
+      "url" => "#{URI.encode( post_url( @post ) )}",
+      "delete" => ["category"]
+    }
+        
+    post micropub_post_path, params: data.to_json, headers: { "Authorization" => "Bearer #{@token.access_token}", "Content-type" => "application/json" }
+    
+    @post = @post.reload
+    
+    assert_equal 201, status    
+    assert_equal false,  @post.tag_list.include?("test1")
+    assert_equal false, @post.tag_list.include?("test2")
+    assert_equal post_url(@post), headers['Location']    
   end
   
   test "Reject the request if operation is not an array" do
