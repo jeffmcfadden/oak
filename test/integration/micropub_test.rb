@@ -40,11 +40,25 @@ class MicropubTest < ActionDispatch::IntegrationTest
   end
   
   test "Create an h-entry post with multiple categories (form-encoded)" do
-    skip( "Pending" )
+    post micropub_post_path, params: "h=entry&content=Micropub+test+of+creating+a+basic+h-entry&category[]=tag1&category[]=tag2", headers: { "Authorization" => "Bearer #{@token.access_token}"}
+    
+    @post = Oak::Post.last
+    
+    assert_equal 201, status    
+    assert_equal "Micropub test of creating a basic h-entry", @post.body
+    assert @post.tag_list.include? "tag1"
+    assert @post.tag_list.include? "tag2"
+    assert_equal post_url(@post), headers['Location']    
   end
   
   test "Create an h-entry with a photo referenced by URL (form-encoded)" do
-    skip( "Pending" )
+    post micropub_post_path, params: "h=entry&content=Micropub+test+of+creating+a+basic+h-entry&category[]=tag1&category[]=tag2&photo=https%3A%2F%2Fmicropub.rocks%2Fmedia%2Fsunset.jpg", headers: { "Authorization" => "Bearer #{@token.access_token}"}
+    
+    @post = Oak::Post.last
+    
+    assert_equal 201, status    
+    assert @post.body.include? "sunset.jpg"
+    assert_equal post_url(@post), headers['Location']        
   end
   
   test "Create an h-entry post with one category (form-encoded)" do
