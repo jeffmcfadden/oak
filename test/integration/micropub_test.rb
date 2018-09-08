@@ -62,7 +62,13 @@ class MicropubTest < ActionDispatch::IntegrationTest
   end
   
   test "Create an h-entry post with one category (form-encoded)" do
-    skip( "Pending" )
+    post micropub_post_path, params: "h=entry&content=Micropub+test+of+creating+a+basic+h-entry&category=tag1", headers: { "Authorization" => "Bearer #{@token.access_token}"}
+    
+    @post = Oak::Post.last
+    
+    assert_equal 201, status    
+    assert @post.tag_list.include? "tag1"
+    assert_equal post_url(@post), headers['Location']        
   end
   
   
