@@ -6,7 +6,7 @@ A rails blogging engine (Rails 5.2+) that supports modern IndieWeb standards, li
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'oak'
+gem 'oak-rails', github: 'jeffmcfadden/oak'
 ```
 
 And then execute:
