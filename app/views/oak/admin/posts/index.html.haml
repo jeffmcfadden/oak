@@ -6,7 +6,7 @@
     = link_to "New Post", [:new, :admin, :post], class: "btn btn-sm btn-success"
 
 .row
-  .col
+  .col-xs-12.col-md-10.offset-md-1.col-lg-8.offset-lg-2.col-xl-6.offset-xl-3
     - @posts.each do |post|
       .row
         .col
@@ -14,12 +14,12 @@
           .card.mb-4.post-list-post
             .card-header
               .row
-                .col-9
+                .col-8
                   %h5.card-title.my-0.py-0
                     = link_to "#{(post.title&.strip == "" || post.title.nil?) ? "Untitled" : post.title}", [:edit, :admin, post]
-                .col-3.text-right
+                .col-4.text-right
                   %small
-                    = link_to "Send Webmentions", [:send_webmentions, :admin, post], method: :post
+                    = link_to "Send Webmentions", [:send_webmentions, :admin, post], method: :post, class: "text-muted"
             .card-body
           
               %p.card-text
