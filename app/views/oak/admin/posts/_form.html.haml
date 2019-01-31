@@ -1,58 +1,57 @@
 .row
-  .col-xs-12.text-right
+  .col.col.text-right
     = link_to "Cancel", [:admin, :posts], class: "btn btn-sm btn-info"
     
 .row
-  .col-xs-8
+  .col.col-9
     = form_with model: [:admin, @post], class: "form form-horizontal" do |f|
     
-      .form-group
-        .col-xs-2
-          = f.label :title, class: "form-label"
-        .col-xs-10
+      .form-group.row
+        = f.label :title, class: "col-2 col-form-label"
+        .col-10
           = f.text_field :title, class: "form-control"
           
-      .form-group
-        .col-xs-2
-          = f.label :published_at, class: "form-label"
-        .col-xs-10
+      .form-group.row
+        = f.label :published_at, class: "col-2 col-form-label"
+        .col-10
           = f.datetime_select :published_at, {}, class: ""
           
-      .form-group
-        .col-xs-2
-          = f.label :author_id, class: "form-label"
-        .col-xs-10
+      .form-group.row
+        = f.label :author_id, class: "col-2 col-form-label"
+        .col-10
           = f.collection_select :author_id, Oak.author_class.all, :id, :name, prompt: false, class: ""
           
-      .form-group
-        .col-xs-2
-          = f.label :live, class: "form-label"
-        .col-xs-10
+      .form-group.row
+        = f.label :live, class: "col-2 col-form-label"
+        .col-10
           = f.select :live, options_for_select( [["Draft", 0], ["Live", 1]], (@post.live? ? 1 : 0) ), class: "form-control"
 
-      .form-group
-        .col-xs-2
-          = f.label :body, class: "form-label"
-        .col-xs-10
+      .form-group.row
+        = f.label :body, class: "col-2 col-form-label"
+        .col-10
           = f.text_area :body, class: "form-control", rows: 24
 
-      .form-group
-        .col-xs-2
-          = f.label :tag_list, class: "form-label"
-        .col-xs-10
+      .form-group.row
+        = f.label :tag_list, class: "col-2 col-form-label"
+        .col-10
           = f.text_field :tag_list, class: "form-control"
       
-      .form-group
-        .col-xs-2
-        .col-xs-10.text-right          
+      .form-group.row
+        .col.text-right          
           = f.submit "Save", class: "btn btn-primary"
+    
+    - if @post.id.present?
+      .row
+        .col
+          .text-right.small
+            = link_to "Destroy", [:admin, @post], method: :delete, data: { confirm: "Are you sure?" }, class: "text-danger"
 
-  .col-xs-4
+  .col.col-3
     %strong Add a Post Asset
     
     = form_with model: [:admin, @post_asset], class: "form form-horizontal", remote: true do |f|
       .form-group
-        = f.file_field :file
+        = f.file_field :file, class: "form-control"
       
       .form-group
         = f.submit "Add", class: "btn btn-sm btn-success"

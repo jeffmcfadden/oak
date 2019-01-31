@@ -1,17 +1,15 @@
 .row
-  .col-xs-8
+  .col
     %h1 Incoming Webmentions
 
-  .col-xs-4.text-right
-
 .row
-  .col-xs-12
+  .col
 
     - if @webmentions.count == 0
       %strong
         No webmentions yet.
 
-    %table.table
+    %table.table.table-striped
       %tr
         %th
         %th
@@ -33,8 +31,8 @@
           %td
             #{webmention.target_url}
           %td
-            = link_to "Destroy", admin_webmention_path( webmention ), method: :delete
+            = link_to "Destroy", admin_webmention_path( webmention ), method: :delete, class: "text-danger"
 
 .row
-  .col-xs-12
+  .col
     = paginate @webmentions

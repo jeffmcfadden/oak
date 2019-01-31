@@ -1,17 +1,15 @@
 .row
-  .col-xs-8
+  .col
     %h1 Outgoing Webmentions
 
-  .col-xs-4.text-right
-
 .row
-  .col-xs-12
+  .col
 
     - if @webmentions.count == 0
       %strong
         No webmentions yet.
 
-    %table.table
+    %table.table.table-striped
       %tr
         %th
         %th

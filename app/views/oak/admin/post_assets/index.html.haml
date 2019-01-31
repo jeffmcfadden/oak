@@ -1,14 +1,22 @@
 .row
-  .col-xs-12
+  .col
+    %h1
+      Post Assets
+
+.row
+  .col.col-xs-12
     - @post_assets.each_slice( 4 ) do |slice|
       .row
         - slice.each do |post_asset|
-          .col-md-3
-            %img.img-responsive{ src: post_asset.public_url }
-            %code
-              #{post_asset.public_url}
-            %p
-              = link_to "Destroy", [:admin, post_asset], method: :delete, data: { confirm: "Are you sure?" }
+          .col
+            .card.mb-3
+              %img.card-img-top{ src: post_asset.public_url }
+              .card-body
+                %p.small.card-text
+                  %code
+                    #{post_asset.public_url}
+              .card-footer
+                = link_to "Destroy", [:admin, post_asset], method: :delete, data: { confirm: "Are you sure?" }, class: "text-danger small"
               
 .row
   .col-xs-12

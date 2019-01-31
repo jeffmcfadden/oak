@@ -1,31 +1,60 @@
 .row
-  .col-xs-8
-    %h1{ style: "margin: 0;" } Posts
+  .col.col-xs-8
+    %h1.my-0 Posts
 
-  .col-xs-4.text-right
+  .col.col-xs-4.text-right
     = link_to "New Post", [:new, :admin, :post], class: "btn btn-sm btn-success"
 
 .row
-  .col-xs-12
-    
+  .col
     - @posts.each do |post|
       .row
-        .col-xs-10
-          %section{ style: "margin-bottom: 1.5em;"}
-            %strong
-              = link_to "#{post.title}", [:edit, :admin, post]
-        
-            %p
-              = simple_format( post.body.truncate( 60 ) )
-        
-            %small
-              = link_to post.published_at.in_time_zone.strftime("%b %-d, %Y %-l:%M%P"), [:edit, :admin, post]
+        .col
+    
+          .card.mb-4
+            .card-header
+              .row
+                .col-9
+                  %h5.card-title.my-0.py-0
+                    = link_to "#{(post.title&.strip == "" || post.title.nil?) ? "Untitled" : post.title}", [:edit, :admin, post]
+                .col-3.text-right
+                  %small
+                    = link_to "Send Webmentions", [:send_webmentions, :admin, post], method: :post
+            .card-body
           
-              - if post.draft?
-                &nbsp;&nbsp;
-                = link_to [:edit, :admin, post] do
-                  .label.label-warning
-                    DRAFT
-        .col-xs-2.text-right
-          .small
-            = link_to "Send Webmentions", [:send_webmentions, :admin, post], method: :post
+              %p.card-text
+                = simple_format( post.body.truncate( 120 ) )
+            
+            .card-footer
+              %small
+                = link_to post.published_at.in_time_zone.strftime("%b %-d, %Y %-l:%M%P"), [:edit, :admin, post], class: "text-muted"
+
+                - if post.draft?
+                  &nbsp;&nbsp;
+                  = link_to [:edit, :admin, post], class: "badge badge-warning" do
+                    Draft
+    
+    
+    
+    
+    
+      / .row
+      /   .col.col-xs-10
+      /     %section{ style: "margin-bottom: 1.5em;"}
+      /       %strong
+      /
+      /
+      /       %p
+      /         = simple_format( post.body.truncate( 60 ) )
+      /
+      /       %small
+      /         = link_to post.published_at.in_time_zone.strftime("%b %-d, %Y %-l:%M%P"), [:edit, :admin, post]
+      /
+      /         - if post.draft?
+      /           &nbsp;&nbsp;
+      /           = link_to [:edit, :admin, post] do
+      /             .label.label-warning
+      /               DRAFT
+      /   .col.col-xs-2.text-right
+      /     .small
+      /       = link_to "Send Webmentions", [:send_webmentions, :admin, post], method: :post
