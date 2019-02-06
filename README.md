@@ -66,7 +66,7 @@ $ rails db:migrate
 
 ## Micropub Spec Implementation Status
 
-Currently **13/34** test passing at the micropub.rocks tests: [https://micropub.rocks/implementation-reports/servers/278/Ix5NV57E72H4mWjUhdIh](https://micropub.rocks/implementation-reports/servers/278/Ix5NV57E72H4mWjUhdIh)
+Currently **20/34** test passing at the micropub.rocks tests: [https://micropub.rocks/implementation-reports/servers/278/Ix5NV57E72H4mWjUhdIh](https://micropub.rocks/implementation-reports/servers/278/Ix5NV57E72H4mWjUhdIh)
 
 The following features constitute the [W3C Micropub Spec](https://www.w3.org/TR/micropub/#feature-li-1).
 
