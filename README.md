@@ -66,7 +66,7 @@ $ rails db:migrate
 
 ## Micropub Spec Implementation Status
 
-Currently **20/34** test passing at the micropub.rocks tests: [https://micropub.rocks/implementation-reports/servers/278/Ix5NV57E72H4mWjUhdIh](https://micropub.rocks/implementation-reports/servers/278/Ix5NV57E72H4mWjUhdIh)
+Currently **21/34** test passing at the micropub.rocks tests: [https://micropub.rocks/implementation-reports/servers/278/Ix5NV57E72H4mWjUhdIh](https://micropub.rocks/implementation-reports/servers/278/Ix5NV57E72H4mWjUhdIh)
 
 The following features constitute the [W3C Micropub Spec](https://www.w3.org/TR/micropub/#feature-li-1).
 
@@ -82,7 +82,7 @@ The following features constitute the [W3C Micropub Spec](https://www.w3.org/TR/
 * :white_check_mark: Uploading a file to the specified Media Endpoint
 * :white_check_mark: Creating a post with a file by sending the request as `multipart/form-data` to the Micropub endpoint
 * :white_check_mark: Creating a post with a photo referenced by URL
-* :x: Creating a post with a photo referenced by URL that includes image alt text
+* :white_check_mark: Creating a post with a photo referenced by URL that includes image alt text
 * :white_check_mark: Creating a post where the request contains properties the server does not recognize
 * :white_check_mark: Returning `HTTP 201 Created` and a `Location` header when creating a post
 * :x: Returning `HTTP 202 Created` and a `Location` header when creating a post
