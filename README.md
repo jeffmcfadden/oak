@@ -82,7 +82,7 @@ end
 
 ## Still Working On
 
-* Deleting / Undeleting Posts
+* Deleting / Undeleting Posts (via MicroPub, works fine via admin interface)
 * Easier/Better Integration with the host application. Still requires a lot of hand-work to get things working smoothly.
 * Syndication
 * Pubsub
