@@ -7,6 +7,8 @@ module Oak
     before_action :authenticate_request
     
     def micropub_post
+      Rails.logger.debug "MicropubController#micropub_post"
+      
       if params[:h] == "entry"
         build_post_from_form
         save_post_and_return
@@ -23,6 +25,8 @@ module Oak
     end
     
     def build_post_from_form
+      Rails.logger.debug "  build_post_from_form"
+      
       @post = Post.new
       @post.title        = params[:name]
       @post.live         = true
@@ -45,6 +49,8 @@ module Oak
     end
     
     def build_post_from_json
+      Rails.logger.debug "  build_post_from_json"
+      
       properties = params[:properties]
       
       @post = Post.new
@@ -53,17 +59,27 @@ module Oak
       content = content_from_json_params( params )
       
       if properties[:photo].present? && properties[:photo].class == Array
+        Rails.logger.debug "    photo present, and is array"
+        
         content += "\n\n"
         properties[:photo].each do |p|
           if p.class == String
+            Rails.logger.debug "      this photo entry is a string"
+            
             content += "<img src=\"#{p}\" />\n"
-          elsif p.class == Hash
+          elsif p.class == Hash || p.class == ActionController::Parameters
+            Rails.logger.debug "      this photo entry is a hash/params"
             src = p[:value]
-            alt = p[:alt]
+            alt = ERB::Util.html_escape(p[:alt])
             
             content += "<img src=\"#{src}\" alt=\"#{alt}\" />\n"
+          else
+            Rails.logger.debug "      this photo entry is something else (#{p.class})"
+            
           end
         end
+      else
+        Rails.logger.debug "    did not find a photo"
       end
       
       @post.body = content
