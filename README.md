@@ -69,7 +69,7 @@ end
 
 Oak currently only supports S3 as the backing store for assets. (Would welcome any PRs that want to clean that up).
 
-Be sure that you have the following environment variables setup:
+Be sure that you have the following environment variables setup (values are examples):
 
     AWS_ACCESS_KEY: "AKIAQWERRPIADFXGSJQ"
     AWS_SECRET_KEY: "CjBLCfdxasdf35p08dua;"
