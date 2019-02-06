@@ -15,9 +15,9 @@ module Oak
       elsif params[:type].class == Array && params[:type].first == "h-entry"
         build_post_from_json
         save_post_and_return
-      elsif request.POST[:action] == "update"
+      elsif request.POST[:action] == "update" || params[:action] == "update"
         update_post_and_return
-      elsif request.POST[:action] == "delete"
+      elsif request.POST[:action] == "delete" || params[:action] == "delete"
         delete_post_and_return
       else
         Rails.logger.error "Unrecognized request type."
