@@ -17,6 +17,8 @@ module Oak
         save_post_and_return
       elsif request.POST[:action] == "update"
         update_post_and_return
+      elsif request.POST[:action] == "delete"
+        delete_post_and_return
       else
         Rails.logger.error "Unrecognized request type."
         render json: { error: "invalid_request", error_description: "Unrecognized request type. No h_entry found." }, status: 400
@@ -160,6 +162,19 @@ module Oak
         return
       end
       
+    end
+    
+    def delete_post_and_return
+      @post = Post.find_by_url( params[:url] )
+      
+      if @post.nil?
+        render plain: 'Not found', status: 404
+        return
+      else
+        @post.destroy
+        render plain: 'Deleted', status: 200
+        return
+      end
     end
     
     def content_from_json_params( params )

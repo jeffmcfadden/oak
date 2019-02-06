@@ -248,17 +248,11 @@ class MicropubTest < ActionDispatch::IntegrationTest
     assert_equal post_url(@post), headers['Location']
   end
   
-  
-  
-  
   test "Create an h-entry with a photo (multipart)" do
   end
   
   test "Create an h-entry with two photos (multipart)" do
   end
-  
-  
-  
   
   test "Replace a property" do
     @post = Oak::Post.create title: "Test post for updating", body: "This is the original text."
@@ -372,9 +366,46 @@ class MicropubTest < ActionDispatch::IntegrationTest
   end  
   
   test "Delete a post (form-encoded)" do
+    post micropub_post_path, params: "h=entry&content=Micropub+test+of+creating+a+basic+h-entry", headers: { "Authorization" => "Bearer #{@token.access_token}"}
+    
+    @post = Oak::Post.last
+    
+    assert_equal 201, status    
+    assert_equal "Micropub test of creating a basic h-entry", @post.body
+    assert_equal post_url(@post), headers['Location']    
+    
+    url = post_url( @post )
+
+    post micropub_post_path, params: "action=delete&url=#{URI.encode( url )}", headers: { "Authorization" => "Bearer #{@token.access_token}"}
+    assert_equal 200, status    
+    assert_equal true, body.include?("Deleted")
+    assert_raises ActiveRecord::RecordNotFound do
+      @post.reload
+    end
   end
   
   test "Delete a post (JSON)" do
+    post micropub_post_path, params: "h=entry&content=Micropub+test+of+creating+a+basic+h-entry", headers: { "Authorization" => "Bearer #{@token.access_token}"}
+    
+    @post = Oak::Post.last
+    
+    assert_equal 201, status    
+    assert_equal "Micropub test of creating a basic h-entry", @post.body
+    assert_equal post_url(@post), headers['Location']    
+    
+    url = post_url( @post )
+
+    data = {
+      "action" => "delete",
+      "url" => "#{URI.encode( post_url( @post ) )}",
+    }
+        
+    post micropub_post_path, params: data.to_json, headers: { "Authorization" => "Bearer #{@token.access_token}", "Content-type" => "application/json" }
+    assert_equal 200, status    
+    assert_equal true, body.include?("Deleted")
+    assert_raises ActiveRecord::RecordNotFound do
+      @post.reload
+    end    
   end
   
   test "Undelete a post (form-encoded)" do
@@ -402,15 +433,16 @@ class MicropubTest < ActionDispatch::IntegrationTest
   
   
   test "Upload a jpg to the Media Endpoint" do
+    skip( "Support exists for S3, but this test is Pending a migration to using active storage properly" )
   end
   
   test "Upload a png to the Media Endpoint" do
+    skip( "Support exists for S3, but this test is Pending a migration to using active storage properly" )
   end
   
   test "Upload a gif to the Media Endpoint" do
+    skip( "Support exists for S3, but this test is Pending a migration to using active storage properly" )    
   end
-  
-  
   
   
   test "Accept access token in HTTP header" do
