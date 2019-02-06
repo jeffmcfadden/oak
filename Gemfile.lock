@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    oak-rails (0.6.4)
+    oak-rails (0.6.5)
       acts-as-taggable-on (~> 6.0)
       aws-sdk-s3 (>= 1.17.0)
       devise (>= 4.5.0)

@@ -219,11 +219,10 @@ class MicropubTest < ActionDispatch::IntegrationTest
     @post = Oak::Post.last
     
     assert_equal 201, status    
-    # assert @post.body.include? "test of creating a photo"
-    # assert @post.body.include? "sunset.jpg"
-    # assert @post.body.include? "Photo of a sunset"
-    # assert_equal post_url(@post), headers['Location']
-    skip( "Not yet implemented." )
+    assert @post.body.include? "test of creating a photo"
+    assert @post.body.include? "sunset.jpg"
+    assert @post.body.include? "Photo of a sunset"
+    assert_equal post_url(@post), headers['Location']
   end
   
   test "Create an h-entry with multiple photos referenced by URL (JSON)" do
@@ -370,11 +369,7 @@ class MicropubTest < ActionDispatch::IntegrationTest
   end
   
   test "Reject the request if operation is not an array" do
-  end
-  
-  
-  
-  
+  end  
   
   test "Delete a post (form-encoded)" do
   end
