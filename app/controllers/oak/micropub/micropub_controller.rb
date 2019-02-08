@@ -43,8 +43,23 @@ module Oak
       content = params[:content]
       
       if params[:photo].present?
-        content += "\n\n"
-        content += "<img src=\"#{params[:photo]}\" />\n"
+        
+        if params[:photo].class == String        
+          content += "\n\n"
+          content += "<img src=\"#{params[:photo]}\" />\n"
+        elsif params[:photo].class == ActionDispatch::Http::UploadedFile
+          @post_asset = PostAsset.create file: params[:photo]
+          content += "\n\n"
+          content += "<img src=\"#{@post_asset.public_url}\" />\n" 
+        elsif params[:photo].class == Array
+          params[:photo].each do |p|
+            if p.class == ActionDispatch::Http::UploadedFile
+              @post_asset = PostAsset.create file: params[:photo]
+              content += "\n\n"
+              content += "<img src=\"#{@post_asset.public_url}\" />\n" 
+            end
+          end
+        end
       end
       
       @post.body         = content
@@ -234,9 +249,11 @@ module Oak
         token ||= params[:access_token] if params[:access_token].present?
         
         @authenticated_user = nil
-        if token.present?
+        if token.present?          
           @authorization_request = IndieauthAuthorizationRequest.find_by access_token: token, approved: true
           @authenticated_user    = User.find_by( id: @authorization_request.user_id )
+        else
+          Rails.logger.debug "No authentication token was provided."
         end
         
         if @authenticated_user.nil?

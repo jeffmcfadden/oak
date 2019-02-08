@@ -433,15 +433,15 @@ class MicropubTest < ActionDispatch::IntegrationTest
   
   
   test "Upload a jpg to the Media Endpoint" do
-    skip( "Support exists for S3, but this test is Pending a migration to using active storage properly" )
+    skip( "This works, but we need to figure out a good way to test." )
   end
   
   test "Upload a png to the Media Endpoint" do
-    skip( "Support exists for S3, but this test is Pending a migration to using active storage properly" )
+    skip( "This works, but we need to figure out a good way to test." )
   end
   
   test "Upload a gif to the Media Endpoint" do
-    skip( "Support exists for S3, but this test is Pending a migration to using active storage properly" )    
+    skip( "This works, but we need to figure out a good way to test." )
   end
   
   

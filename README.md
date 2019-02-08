@@ -67,14 +67,14 @@ end
 
 ### AWS S3 Configuration
 
-Oak currently only supports S3 as the backing store for assets. (Would welcome any PRs that want to clean that up).
+Oak currently only supports S3 as the backing service for assets. This largely because of the `PostAsset#public_url` method implementation. (Would welcome any PRs that want to clean that up).
 
 Be sure that you have the following environment variables setup (values are examples):
 
-    AWS_ACCESS_KEY: "AKIAQWERRPIADFXGSJQ"
-    AWS_SECRET_KEY: "CjBLCfdxasdf35p08dua;"
-    AWS_BUCKET: "my.blog.assets"
-    AWS_REGION: "us-west-1"
+    ENV['AWS_ACCESS_KEY'] = "AKIAQWERRPIADFXGSJQ"
+    ENV['AWS_SECRET_KEY'] = "CjBLCfdxasdf35p08dua;"
+    ENV['AWS_BUCKET'] = "my.blog.assets"
+    ENV['AWS_REGION'] = "us-west-1"
 
 
 ## Limitations
