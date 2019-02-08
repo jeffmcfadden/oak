@@ -7,6 +7,8 @@ module Oak
     after_commit :make_public
     
     def public_url
+      return "" unless self.file.attached?
+      
       region     = ENV["AWS_REGION"]
       access_key = ENV["AWS_ACCESS_KEY"]
       secret_key = ENV["AWS_SECRET_KEY"]
@@ -19,6 +21,8 @@ module Oak
     end
     
     def make_public
+      return unless self.file.attached?
+      
       region     = ENV["AWS_REGION"]
       access_key = ENV["AWS_ACCESS_KEY"]
       secret_key = ENV["AWS_SECRET_KEY"]

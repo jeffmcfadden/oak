@@ -54,7 +54,7 @@ module Oak
         elsif params[:photo].class == Array
           params[:photo].each do |p|
             if p.class == ActionDispatch::Http::UploadedFile
-              @post_asset = PostAsset.create file: params[:photo]
+              @post_asset = PostAsset.create file: p
               content += "\n\n"
               content += "<img src=\"#{@post_asset.public_url}\" />\n" 
             end
