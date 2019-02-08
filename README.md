@@ -104,7 +104,7 @@ Be sure that you have the following environment variables setup (values are exam
 
 ## Micropub Spec Implementation Status
 
-Currently **23/34** test passing at the micropub.rocks tests: [https://micropub.rocks/implementation-reports/servers/278/Ix5NV57E72H4mWjUhdIh](https://micropub.rocks/implementation-reports/servers/278/Ix5NV57E72H4mWjUhdIh)
+Currently **24/34** test passing at the micropub.rocks tests: [https://micropub.rocks/implementation-reports/servers/278/Ix5NV57E72H4mWjUhdIh](https://micropub.rocks/implementation-reports/servers/278/Ix5NV57E72H4mWjUhdIh)
 
 Or, checkout the entire [W3C Micropub Spec](https://www.w3.org/TR/micropub/#feature-li-1).
 
