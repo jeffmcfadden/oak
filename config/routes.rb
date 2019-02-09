@@ -39,6 +39,10 @@ Oak::Engine.routes.draw do
     post '/token', to: 'indieauth#request_token'
     get '/token',  to: 'indieauth#verify_token'
   end
+  
+  scope module: 'meta_weblog_api' do
+    post '/xmlrpc.php', to: 'base#index', as: :xmlrpc
+  end
 
   post '/webmention', to: 'webmentions#create', as: :incoming_webmention
   
