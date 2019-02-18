@@ -2,7 +2,7 @@ require_dependency "oak/application_controller"
 require 'xmlrpc/server'
 
 module Oak
-  class MetaWeblogApi::BaseController < ApplicationController
+  class WordpressApi::BaseController < ApplicationController
     
     protect_from_forgery with: :null_session
     
@@ -11,7 +11,7 @@ module Oak
     # before_action :authenticate_request
     
     def index
-      Rails.logger.info "MetaWeblogApi#Base"
+      Rails.logger.info "WordpressApi#Base"
       Rails.logger.info "  Raw Post:"
       Rails.logger.info request.raw_post
       
@@ -67,6 +67,86 @@ module Oak
           wp_getPost(post_id,fields)
         end
         
+        @xmlrpc_server.add_handler( "wp.newPost" ) do |blog_id,user,pass,content = {}|
+          authenticate(user,pass)
+          wp_newPost(content)
+        end
+        
+        @xmlrpc_server.add_handler( "wp.editPost" ) do |blog_id,user,pass,post_id,content = {}|
+          authenticate(user,pass)
+          wp_editPost(post_id,fields)
+        end
+        
+        @xmlrpc_server.add_handler( "wp.deletePost" ) do |blog_id,user,pass,post_id|
+          authenticate(user,pass)
+          wp_deletePost(post_id,fields)
+        end
+        
+        @xmlrpc_server.add_handler( "wp.getPostType" ) do |blog_id,user,pass,post_type,fields = []|
+          authenticate(user,pass)
+          wp_getPostType(post_id,fields)
+        end
+        
+        @xmlrpc_server.add_handler( "wp.getPostTypes" ) do |blog_id,user,pass,filter = {},fields = []|
+          authenticate(user,pass)
+          wp_getPostTypes(post_id,fields)
+        end
+        
+        @xmlrpc_server.add_handler( "wp.getPostStatusList" ) do |blog_id,user,pass|
+          authenticate(user,pass)
+          wp_getPostStatusList
+        end
+        
+        @xmlrpc_server.add_handler( "wp.getTaxonomy" ) do |blog_id,user,pass|
+          authenticate(user,pass)
+          wp_getTaxonomy
+        end
+        
+        @xmlrpc_server.add_handler( "wp.getTaxonomies" ) do |blog_id,user,pass|
+          authenticate(user,pass)
+          wp_getTaxonomies
+        end
+        
+        @xmlrpc_server.add_handler( "wp.getTerm" ) do |blog_id,user,pass|
+          authenticate(user,pass)
+          wp_getTerm
+        end
+
+        @xmlrpc_server.add_handler( "wp.getTerms" ) do |blog_id,user,pass|
+          authenticate(user,pass)
+          wp_getTerms
+        end
+        
+        @xmlrpc_server.add_handler( "wp.newTerm" ) do |blog_id,user,pass|
+          authenticate(user,pass)
+          wp_newTerm
+        end
+        
+        @xmlrpc_server.add_handler( "wp.editTerm" ) do |blog_id,user,pass|
+          authenticate(user,pass)
+          wp_editTerm
+        end
+        
+        @xmlrpc_server.add_handler( "wp.deleteTerm" ) do |blog_id,user,pass|
+          authenticate(user,pass)
+          wp_deleteTerm
+        end
+        
+        @xmlrpc_server.add_handler( "wp.getMediaItem" ) do |blog_id,user,pass|
+          authenticate(user,pass)
+          wp_getMediaItem
+        end
+        
+        @xmlrpc_server.add_handler( "wp.getMediaLibrary" ) do |blog_id,user,pass|
+          authenticate(user,pass)
+          wp_getMediaLibrary
+        end
+        
+        @xmlrpc_server.add_handler( "wp.uploadFile" ) do |blog_id,user,pass|
+          authenticate(user,pass)
+          wp_uploadFile
+        end
+        
         
         @xmlrpc_server.add_introspection
       end
@@ -118,6 +198,19 @@ module Oak
         Post.find(post_id).fields_for_wordpress
       end
       
+      def wp.newPost(content)
+        post = Post.new_from_wordpress_fields content
+        post.save
+        
+        post
+      end
+      
+      def wp_getPostStatusList
+        {
+          draft: "Draft",
+          live:  "Live"
+        }
+      end
     
   end
 end

@@ -40,7 +40,7 @@ Oak::Engine.routes.draw do
     get '/token',  to: 'indieauth#verify_token'
   end
   
-  scope module: 'meta_weblog_api' do
+  scope module: 'wordpress_api' do
     post '/xmlrpc.php', to: 'base#index', as: :xmlrpc
   end
 
