@@ -1,5 +1,7 @@
 module Oak
   class Post < ApplicationRecord
+    include WordpressMimicry
+    
     belongs_to :author, class_name: Oak.author_class.to_s, optional: true
     has_many :outgoing_webmentions
     
