@@ -53,7 +53,11 @@ module Oak
       urls = URI.extract( body_html, ["http", "https"] )
       
       urls.uniq.each do |url|
-        OutgoingWebmention.validate_and_send( target_url: url, post: self )
+        begin
+          OutgoingWebmention.validate_and_send( target_url: url, post: self )
+        rescue StandardError => err
+          Rails.logger.error "Error sending webmention from post #{id} to #{url}: #{err}"
+        end
       end
     end
     
