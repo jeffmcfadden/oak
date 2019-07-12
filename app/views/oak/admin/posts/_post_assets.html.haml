@@ -1,7 +1,0 @@
-- Oak::PostAsset.order( created_at: :desc ).limit(7).each do |post_asset|
-  .card.mb-3.post-asset
-    %img.card-img-top{ src: post_asset.public_url  }
-    .card-body
-      %p.small.card-text
-        %code
-          #{post_asset.public_url}
