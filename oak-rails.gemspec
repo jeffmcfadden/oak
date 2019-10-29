@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "kaminari",            ">= 1.1.1"
   s.add_dependency 'devise',              ">= 4.6.0"
   s.add_dependency 'redcarpet',           ">= 3.4.0"
-  s.add_dependency 'acts-as-taggable-on', '~> 6.0'
+  s.add_dependency 'acts-as-taggable-on', '>= 6.5.0'
   
   s.add_dependency 'nokogiri',            '>= 1.8.5'
   s.add_dependency 'rack',                '>= 2.0.6'
